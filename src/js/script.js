@@ -88,6 +88,12 @@
       }
     },
 
+    initData: function(){
+      const thisApp = this;
+  
+      thisApp.data = dataSource;
+    },
+
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
@@ -99,12 +105,6 @@
       thisApp.initMenu();
     },
   };
-
-  initData: function(){
-    const thisApp = this;
-
-    thisApp.data = dataSource;
-  },
 
   app.init();
 }
