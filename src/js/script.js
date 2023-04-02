@@ -88,6 +88,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -164,6 +165,8 @@
           else if (formData[paramId] && !formData[paramId].includes(optionId) && option.default == true) {
             price = price - option.price;
           }
+
+          
         }
       }
       // update calculated price in the HTML
