@@ -111,6 +111,7 @@
           }
 
         }
+
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
       });
@@ -148,6 +149,7 @@
       let price = thisProduct.data.price;
 
       // for every category (param)...
+    
       for (let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
@@ -165,8 +167,18 @@
           else if (formData[paramId] && !formData[paramId].includes(optionId) && option.default == true) {
             price = price - option.price;
           }
-
           
+          const optionImage = thisProduct.imageWrapper.querySelector(`img.${paramId}-${optionId}`);
+          if(optionImage){
+            if(formData[paramId] && formData[paramId].includes(optionId)){
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
+            }
+            else
+            {
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
+          }
+
         }
       }
       // update calculated price in the HTML
