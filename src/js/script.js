@@ -364,6 +364,9 @@
       thisCart.dom.productList.addEventListener('updated', function(){
         thisCart.update();
       });
+      thisCart.dom.productList.addEventListener('remove', function(event){
+        thisCart.remove(event.detail.cartProduct);
+      });
     }
 
     add(menuProduct) {
@@ -399,6 +402,15 @@
         item.innerHTML = thisCart.totalPrice;
       }
     }
+    remove(product){
+      const thisCart = this;
+      // console.log('product:', product);
+      // console.log(product.dom.wrapper);
+      product.dom.wrapper.remove();
+      const indexOfProduct = thisCart.products.indexOf(product);
+      thisCart.products.splice(indexOfProduct, 1);
+      thisCart.update();
+    }
   }
   class CartProduct {
     constructor(menuProduct, element) {
@@ -413,6 +425,7 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
       // console.log('thisCartProduct: ', thisCartProduct);
     }
 
@@ -436,6 +449,31 @@
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
         thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      });
+    }
+
+    remove(){
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+    }
+    initActions(){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function(event){
+        event.preventDefault();
+      });
+      thisCartProduct.dom.remove.addEventListener('click', function(event){
+        event.preventDefault();
+        thisCartProduct.remove();
+        // console.log('remove dziala');
       });
     }
   }
